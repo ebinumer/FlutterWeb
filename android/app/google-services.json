@@ -1,0 +1,134 @@
+{
+  "project_info": {
+    "project_number": "1046697314582",
+    "project_id": "chatapp-16159",
+    "storage_bucket": "chatapp-16159.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1046697314582:android:843d3336987a19038e2837",
+        "android_client_info": {
+          "package_name": "com.ebinumer.drawit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1046697314582-6uh758k3tmhnan36f30hmo79m5sjakgu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtcKIZMaU6odF8KrRlEZVbMVbymnvN71c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1046697314582-6uh758k3tmhnan36f30hmo79m5sjakgu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1046697314582:android:151c32459fb411d78e2837",
+        "android_client_info": {
+          "package_name": "com.ebinumer.firebasechatapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1046697314582-p94sb72u3ephjbmc6939ispsuqokbl0n.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ebinumer.firebasechatapp",
+            "certificate_hash": "cc9f487d7c972d3c8a924ecb86dcf86c6b79f4de"
+          }
+        },
+        {
+          "client_id": "1046697314582-6uh758k3tmhnan36f30hmo79m5sjakgu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtcKIZMaU6odF8KrRlEZVbMVbymnvN71c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1046697314582-6uh758k3tmhnan36f30hmo79m5sjakgu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1046697314582:android:80109d8bd7a955338e2837",
+        "android_client_info": {
+          "package_name": "com.ebinumer.spotifyclone"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1046697314582-6uh758k3tmhnan36f30hmo79m5sjakgu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtcKIZMaU6odF8KrRlEZVbMVbymnvN71c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1046697314582-6uh758k3tmhnan36f30hmo79m5sjakgu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1046697314582:android:37c7c3ae3a468c908e2837",
+        "android_client_info": {
+          "package_name": "com.share_circle.share_circle"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1046697314582-6uh758k3tmhnan36f30hmo79m5sjakgu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtcKIZMaU6odF8KrRlEZVbMVbymnvN71c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1046697314582-6uh758k3tmhnan36f30hmo79m5sjakgu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
