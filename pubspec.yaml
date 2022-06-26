@@ -21,6 +21,7 @@ dependencies:
   easy_dynamic_theme: ^2.0.0
   firebase_core: ^1.0.2
   firebase_auth: ^1.0.1
+  simple_animations: ^4.1.0
 
 
 dev_dependencies:

@@ -1,6 +1,9 @@
 import 'package:share_circle/widgets/responsive.dart';
 import 'package:flutter/material.dart';
 
+import '../screens/books/books.dart';
+import '../screens/sell_book.dart';
+
 class FloatingQuickAccessBar extends StatefulWidget {
   const FloatingQuickAccessBar({
     Key? key,
@@ -17,7 +20,7 @@ class _FloatingQuickAccessBarState extends State<FloatingQuickAccessBar> {
   List _isHovering = [false, false, false, false];
   List<Widget> rowElements = [];
 
-  List<String> items = ['Buy', 'Sell', 'Rent', 'History'];
+  List<String> items = ['Books', 'Sell', 'Buy', 'History'];
   List<IconData> icons = [
     Icons.location_on,
     Icons.date_range,
@@ -36,7 +39,20 @@ class _FloatingQuickAccessBarState extends State<FloatingQuickAccessBar> {
             value ? _isHovering[i] = true : _isHovering[i] = false;
           });
         },
-        onTap: () {},
+        onTap: () {
+          print("${items[i]}");
+          if (items[i] == "Books") {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => BooksPage()));
+          }
+          else if (items[i] == "Sell") {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => SellPage()));
+          }
+          else if (items[i] == "Buy") {}
+          else if (items[i] == "History") {}
+
+        },
         child: Text(
           items[i],
           style: TextStyle(

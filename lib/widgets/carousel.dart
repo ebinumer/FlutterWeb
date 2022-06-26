@@ -18,21 +18,17 @@ class _DestinationCarouselState extends State<DestinationCarousel> {
   int _current = 0;
 
   final List<String> images = [
-    'assets/images/fantasy.jpeg',
-    'assets/images/historical.jpeg',
-    'assets/images/detective.jpeg',
-    'assets/images/romance.jpeg',
-    'assets/images/short.jpeg',
-    'assets/images/biography.jpeg',
+    'assets/images/engineering_mechanics.jpg',
+    'assets/images/engineering_chemistry.jpg',
+    'assets/images/engineering_physics.jpg',
+    'assets/images/electrical.jpg',
   ];
 
   final List<String> places = [
-    'Fantasy',
-    'Historical Fiction',
-    'Detective and Mystery',
-    'Romance',
-    'Short Stories',
-    'Biographies and Autobiographies',
+    'Engineering mechanics',
+    'Engineering chemistry',
+    'Engineering physics',
+    'Basic electrical and\n electronics engineering',
   ];
 
   List<Widget> generateImageTiles(screenSize) {
