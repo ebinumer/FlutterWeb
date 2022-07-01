@@ -1,8 +1,11 @@
+import 'dart:js';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:share_circle/screens/home_page.dart';
 
 
-class SellPage extends StatelessWidget {
+class SellPage extends StatefulWidget {
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
@@ -15,14 +18,27 @@ class SellPage extends StatelessWidget {
           // MediaQuery.of(context).size.width >= 980
           //     ? Menu()
           //     : SizedBox(), // Responsive
-          Body( context)
+          MyInputPage( context)
         ],
       ),
 
     );
   }
-}
 
+  @override
+  State<StatefulWidget> createState() {
+    // TODO: implement createState
+    throw UnimplementedError();
+  }
+
+
+}
+class MyInputPage extends StatefulWidget {
+  const MyInputPage(BuildContext context);
+
+  @override
+  Body createState() => Body(context);
+}
 class Menu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -77,9 +93,30 @@ class Menu extends StatelessWidget {
 
 }
 
-class Body extends StatelessWidget {
-  Body(BuildContext context);
+class Body extends  State<SellPage> {
 
+
+  String dropdownvalue = 'select';
+  var semester = [
+    'select',
+    'Semester 1',
+    'Semester 2',
+    'Semester 3',
+    'Semester 4',
+    'Semester 5',
+    'Semester 6',
+  ];
+  var branch = [
+    'select',
+    'Automobile Engineering',
+    'Civil Engineering',
+    'Computer Science and Engineering',
+    'Electrical and Electronics Engineering',
+    'Mechanical Engineering',
+    'Semester 6',
+  ];
+
+  Body(JsObject context);
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -130,10 +167,15 @@ class Body extends StatelessWidget {
   }
 
   Widget _formSell(BuildContext context) {
-
+    final _bookNameController = TextEditingController();
+    final _BranchController = TextEditingController();
+    final _SemesterController = TextEditingController();
+    final _PriceController = TextEditingController();
+    final _ownerController = TextEditingController();
     return Column(
       children: [
         TextField(
+          controller:_bookNameController,
           keyboardType: TextInputType.emailAddress,
           decoration: InputDecoration(
             hintText: 'Book Name',
@@ -152,7 +194,31 @@ class Body extends StatelessWidget {
           ),
         ),
         SizedBox(height: 30),
+        DropdownButton(
+
+          // Initial Value
+          value: dropdownvalue,
+
+          // Down Arrow Icon
+          icon: const Icon(Icons.keyboard_arrow_down),
+
+          // Array list of items
+          items: branch.map((String items) {
+            return DropdownMenuItem(
+              value: items,
+              child: Text(items),
+            );
+          }).toList(),
+          // After selecting the desired option,it will
+          // change button value to selected value
+          onChanged: (String? newValue) {
+            setState(() {
+              dropdownvalue = newValue!;
+            });
+          },
+        ),
         TextField(
+          controller: _BranchController,
           keyboardType: TextInputType.emailAddress,
           decoration: InputDecoration(
             hintText: 'Branch',
@@ -172,6 +238,7 @@ class Body extends StatelessWidget {
         ),
         SizedBox(height: 30),
         TextField(
+          controller: _SemesterController,
           decoration: InputDecoration(
             hintText: 'Semester',
             filled: true,
@@ -191,9 +258,29 @@ class Body extends StatelessWidget {
         ),
         SizedBox(height: 40),
         TextField(
+          controller: _PriceController,
           keyboardType: TextInputType.emailAddress,
           decoration: InputDecoration(
             hintText: 'Price',
+            filled: true,
+            fillColor: Colors.blueGrey[50],
+            labelStyle: TextStyle(fontSize: 12),
+            contentPadding: EdgeInsets.only(left: 30),
+            enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: (Colors.blueGrey[50])!),
+              borderRadius: BorderRadius.circular(15),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: (Colors.blueGrey[50])!),
+              borderRadius: BorderRadius.circular(15),
+            ),
+          ),
+        ),
+        SizedBox(height: 30),
+        TextField(
+          controller: _ownerController,
+          decoration: InputDecoration(
+            hintText: 'Seller Name',
             filled: true,
             fillColor: Colors.blueGrey[50],
             labelStyle: TextStyle(fontSize: 12),
@@ -223,6 +310,21 @@ class Body extends StatelessWidget {
           ),
           child: ElevatedButton(
             onPressed: () {
+              FirebaseFirestore.instance
+                  .collection('books')
+                  .add({
+                'Department': _BranchController.text,
+                'Name': _bookNameController.text,
+                'Price': _PriceController.text,
+                'Semester': _SemesterController.text,
+                'owner': _ownerController.text,
+                  });
+              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                  content: Text(
+                    "Book Added Successfully",
+                    style: TextStyle(fontSize: 16),
+                  )));
+              Navigator.pop(context);
 
             },
             style: ElevatedButton.styleFrom(
