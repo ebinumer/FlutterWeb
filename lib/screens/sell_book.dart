@@ -113,12 +113,12 @@ class Body extends  State<MyInputPage> {
   ];
   var branch = [
     'select Branch',
-    'Automobile Engineering',
-    'Civil Engineering',
-    'Computer Science and Engineering',
-    'Electrical and Electronics Engineering',
+    'Common',
     'Mechanical Engineering',
-    'Semester 6',
+    'Information Technology',
+    'Computer Engineering',
+    'Electrical Engineering',
+    'Electronics Engineering',
   ];
 
 
@@ -181,6 +181,7 @@ class Body extends  State<MyInputPage> {
     return Column(
       children: [
       Container(
+        width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       decoration: BoxDecoration(
       color: Colors.blueGrey[50],
@@ -256,7 +257,7 @@ class Body extends  State<MyInputPage> {
         const SizedBox(height: 30),
         TextField(
           controller: _PriceController,
-          keyboardType: TextInputType.number,
+          keyboardType: TextInputType.text,
           decoration: InputDecoration(
             hintText: 'Price',
             filled: true,

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -193,6 +194,8 @@ class Body extends StatelessWidget {
     final _usernameController = TextEditingController();
     final _emailController = TextEditingController();
     final _passwordController = TextEditingController();
+    final _mobileController = TextEditingController();
+    final _addressController = TextEditingController();
     return Column(
       children: [
 
@@ -218,7 +221,7 @@ class Body extends StatelessWidget {
         ),
         const SizedBox(height: 30),
         TextField(
-          controller: _usernameController,
+          controller: _addressController,
           decoration: InputDecoration(
             hintText: 'Enter Address',
             filled: true,
@@ -238,7 +241,7 @@ class Body extends StatelessWidget {
         ),
         const SizedBox(height: 30),
         TextField(
-          controller: _usernameController,
+          controller: _mobileController,
           decoration: InputDecoration(
             hintText: 'Enter Mobile Number',
             filled: true,
@@ -335,6 +338,14 @@ class Body extends StatelessWidget {
                     _emailController.text, _passwordController.text)
                     .then((result) {
                   if (result == "Success") {
+                    FirebaseFirestore.instance
+                        .collection('register')
+                        .add({
+                      'email': _emailController.text,
+                      'Mobile': _mobileController.text,
+                      'address': _addressController.text,
+                      'userName': _usernameController.text,
+                    });
                     Navigator.pushReplacement(context,
                         MaterialPageRoute(builder: (context) => HomePage()));
                   }
