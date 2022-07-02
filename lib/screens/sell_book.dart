@@ -347,7 +347,7 @@ class Body extends  State<MyInputPage> {
               }
               else{
               FirebaseFirestore.instance
-                  .collection('books')
+                  .collection(branchValue)
                   .add({
               'Department': branchValue,
               'Name': _bookNameController.text,

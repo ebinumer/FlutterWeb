@@ -1,11 +1,7 @@
 import 'package:easy_dynamic_theme/easy_dynamic_theme.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/foundation.dart';
-import 'package:share_circle/screens/login.dart';
 import 'package:share_circle/utils/theme_data.dart';
 import 'package:flutter/material.dart';
-import 'package:share_circle/utils/authentication.dart';
 
 import 'screens/home_page.dart';
 

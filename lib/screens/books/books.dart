@@ -3,13 +3,36 @@ import 'package:flutter/services.dart';
 import 'package:share_circle/screens/books/Animation/FadeAnimation.dart';
 import 'package:flutter/material.dart';
 
+class BooksPage extends StatefulWidget {
 
-class BooksPage extends StatelessWidget {
+  @override
+  State<StatefulWidget> createState() => _BookState();
+}
+
+class _BookState extends State<BooksPage> {
+
+  late List<String> _choices;
+  late int _choiceIndex;
+
+
+  @override
+  void initState() {
+    super.initState();
+    _choiceIndex = 0;
+
+    _choices = ["Common","Mechanical Engineering",
+      "Information Technology","Computer Engineering","Electrical Engineering",
+      "Electronics Engineering",];
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
+        iconTheme: const IconThemeData(
+          color: Colors.black, //change your color here
+        ),
         backgroundColor: Colors.transparent,
         leading: null,
         title: const Text("Books", style: TextStyle(color: Colors.black, fontSize: 25),),
@@ -24,115 +47,48 @@ class BooksPage extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: Container(
-          padding: const EdgeInsets.all(20),
+          padding: const EdgeInsets.all(10),
           child: Column(
             children: <Widget>[
-              Container(
-                height: 40,
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  children: <Widget>[
-                    AspectRatio(
-                      aspectRatio: 2.2/1,
-                      child: FadeAnimation(1, Container(
-                        margin: EdgeInsets.only(right: 10),
-                        decoration: BoxDecoration(
-                          color: Colors.grey[200],
-                          borderRadius: BorderRadius.circular(20)
-                        ),
-                        child: const Center(
-                          child: Text("All", style: TextStyle(fontSize: 20),),
-                        ),
-                      )),
-                    ),
-                    AspectRatio(
-                      aspectRatio: 2.2/1,
-                      child: FadeAnimation(1.1, Container(
-                        margin: const EdgeInsets.only(right: 10),
-                        child: const Center(
-                          child: Text("Common", style: TextStyle(fontSize: 14),),
-                        ),
-                      )),
-                    ),
-                    AspectRatio(
-                      aspectRatio: 4.2/1,
-                      child: FadeAnimation(1.2, Container(
-                        margin: const EdgeInsets.only(right: 10),
-                        child: const Center(
-                          child: Text("Mechanical Engineering", style: TextStyle(fontSize: 14),),
-                        ),
-                      )),
-                    ),
-                    AspectRatio(
-                      aspectRatio: 4.2/1,
-                      child: FadeAnimation(1.3, Container(
-                        margin: const EdgeInsets.only(right: 10),
-                        child: const Center(
-                          child: Text("Information Technology", style: TextStyle(fontSize: 14),),
-                        ),
-                      )),
-                    ),
-                    AspectRatio(
-                      aspectRatio: 4.2/1,
-                      child: FadeAnimation(1.4, Container(
-                        margin: const EdgeInsets.only(right: 10),
-                        child: const Center(
-                          child: Text("Computer Engineering", style: TextStyle(fontSize: 14),),
-                        ),
-                      )),
-                    ),
-                    AspectRatio(
-                      aspectRatio: 4.2/1,
-                      child: FadeAnimation(1.4, Container(
-                        margin: const EdgeInsets.only(right: 10),
-                        child: const Center(
-                          child: Text("Electrical Engineering", style: TextStyle(fontSize: 14),),
-                        ),
-                      )),
-                    ),
-                    AspectRatio(
-                      aspectRatio: 4.2/1,
-                      child: FadeAnimation(1.4, Container(
-                        margin: const EdgeInsets.only(right: 10),
-                        child: const Center(
-                          child: Text("Electronics Engineering", style: TextStyle(fontSize: 14),),
-                        ),
-                      )),
-                    )
-                  ],
-                ),
-              ),
-              const SizedBox(height: 20,),
-                StreamBuilder(
-                    stream: FirebaseFirestore.instance.collection('books').snapshots(),
-                       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                         if (!snapshot.hasData) {
-                           return const Center(
-                             child: CircularProgressIndicator(),
-                           );
-                         }
-                         return ListView(
-                           scrollDirection: Axis.vertical,
-                           shrinkWrap: true,
-                             children: snapshot.data!.docs.map((document) {
-                           return Container(
-                             child: FadeAnimation(1.5, makeItem( tag: 'red',
-                                 context: context,name:document['Name'],sem: document['Semester'],price:document['Price'] )),
-                             // child: Center(child: Text(document['text'])),
-                           );
-                         }).toList(),
-
-            //   FadeAnimation(1.5, makeItem(image: 'assets/images/chemistry.webp', tag: 'red', context: context,name:"Engineering chemistry",sem: "2st Semester",price:"Rs : 250" )),
-            //   FadeAnimation(1.6, makeItem(image: 'assets/images/design.jpg', tag: 'blue', context: context,name:"Design engineering",sem: "2st Semester",price:"Rs : 350"  )),
-            //   FadeAnimation(1.7, makeItem(image: 'assets/images/physics.jpg', tag: 'white', context: context,name:"Engineering physics",sem: "1st Semester",price:"Rs : 300" )),
-            // ],
-          );
-        }),
+              _buildChoiceChips(),
+              const SizedBox(height: 10,),
+              _mitem(_choiceIndex),
+              // StreamBuilder(
+              //     stream: FirebaseFirestore.instance.collection('books').snapshots(),
+              //     builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+              //       if (!snapshot.hasData) {
+              //         return const Center(
+              //           child: CircularProgressIndicator(),
+              //         );
+              //       }
+              //
+              //       return ListView(
+              //         scrollDirection: Axis.vertical,
+              //         shrinkWrap: true,
+              //         children: snapshot.data!.docs.map((document) {
+              //
+              //           return FadeAnimation(1.5, makeItem(count:_choiceIndex,tag: 'red',
+              //               context: context,
+              //               name: document['Name'],
+              //               category: document['Department'],
+              //               sem: document['Semester'],
+              //               price: document['Price']));
+              //
+              //         }
+              //
+              //         ).toList(),
+              //
+              //       );
+              //
+              //
+              //
+              //     }),
       ]),
     )));
   }
 
-  Widget makeItem({ tag, context,name,sem,price}) {
+  Widget makeItem({count, tag, context,name,category,sem,price}) {
+
     return Hero(
       tag: tag,
       child: GestureDetector(
@@ -140,12 +96,12 @@ class BooksPage extends StatelessWidget {
 
         },
         child: Container(
-          height: 250,
+          height: 230,
           width: double.infinity,
           padding: const EdgeInsets.all(20),
           margin: const EdgeInsets.only(bottom: 20),
           decoration: BoxDecoration(
-              color: Colors.blue,
+              color: tag,
             borderRadius: BorderRadius.circular(20),
             boxShadow: [
               BoxShadow(
@@ -168,6 +124,8 @@ class BooksPage extends StatelessWidget {
                       children: <Widget>[
                         FadeAnimation(1, Text(name, style: const TextStyle(color: Colors.white, fontSize: 30, fontWeight: FontWeight.bold),)),
                         const SizedBox(height: 10,),
+                        FadeAnimation(1.1, Text(category, style: const TextStyle(color: Colors.white, fontSize: 20),)),
+                        const SizedBox(height: 10,),
                         FadeAnimation(1.1, Text(sem, style: const TextStyle(color: Colors.white, fontSize: 20),)),
 
                       ],
@@ -183,7 +141,7 @@ class BooksPage extends StatelessWidget {
                     child: const Center(
                       child: Icon(Icons.favorite_border, size: 20,),
                     ),
-                  ))
+                  )),
                 ],
               ),
               FadeAnimation(1.2, Text("₹"+price, style: const TextStyle(color: Colors.white, fontSize: 30, fontWeight: FontWeight.bold),)),
@@ -192,5 +150,252 @@ class BooksPage extends StatelessWidget {
         ),
       ),
     );
+
   }
+
+  Widget _buildChoiceChips() {
+    return SizedBox(
+      height: MediaQuery.of(context).size.height/3,
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: _choices.length,
+        itemBuilder: (BuildContext context, int index) {
+          return ChoiceChip(
+            label: Text(_choices[index]),
+            selected: _choiceIndex == index,
+            selectedColor: Colors.red,
+            onSelected: (bool selected) {
+              setState(() {
+                _choiceIndex = selected ? index : 0;
+
+              });
+            },
+            backgroundColor: Colors.green,
+            labelStyle: const TextStyle(color: Colors.white),
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _mitem(item){
+    if(item == 1){
+      return  StreamBuilder(
+          stream: FirebaseFirestore.instance.collection('Mechanical Engineering').snapshots(),
+          builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+            if (!snapshot.hasData) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+             if(snapshot.data?.size==0){
+                    return const Center(
+                    child: Text("No Items In Mechanical Engineering"),
+                  );
+               }
+            return ListView(
+              scrollDirection: Axis.vertical,
+              shrinkWrap: true,
+              children: snapshot.data!.docs.map((document) {
+
+                return FadeAnimation(1.5, makeItem(count:_choiceIndex,tag: Colors.red,
+                    context: context,
+                    name: document['Name'],
+                    category: document['Department'],
+                    sem: document['Semester'],
+                    price: document['Price']));
+
+              }
+
+              ).toList(),
+
+            );
+
+
+
+          });
+    }
+    if(item == 2){
+      return  StreamBuilder(
+          stream: FirebaseFirestore.instance.collection('Information Technology').snapshots(),
+          builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+            if (!snapshot.hasData) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+            if(snapshot.data?.size==0){
+              return const Center(
+                child: Text("No Items In Information Technology"),
+              );
+            }
+            return ListView(
+              scrollDirection: Axis.vertical,
+              shrinkWrap: true,
+              children: snapshot.data!.docs.map((document) {
+
+                return FadeAnimation(1.5, makeItem(count:_choiceIndex,tag:Colors.green,
+                    context: context,
+                    name: document['Name'],
+                    category: document['Department'],
+                    sem: document['Semester'],
+                    price: document['Price']));
+
+              }
+
+              ).toList(),
+
+            );
+
+
+
+          });
+    }
+    if(item == 3){
+      return  StreamBuilder(
+          stream: FirebaseFirestore.instance.collection('Computer Engineering').snapshots(),
+          builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+            if (!snapshot.hasData) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+            if(snapshot.data?.size==0){
+              return const Center(
+                child: Text("No Items In Computer Engineering"),
+              );
+            }
+            return ListView(
+              scrollDirection: Axis.vertical,
+              shrinkWrap: true,
+              children: snapshot.data!.docs.map((document) {
+
+                return FadeAnimation(1.5, makeItem(count:_choiceIndex,tag: Colors.deepOrange,
+                    context: context,
+                    name: document['Name'],
+                    category: document['Department'],
+                    sem: document['Semester'],
+                    price: document['Price']));
+
+              }
+
+              ).toList(),
+
+            );
+
+
+
+          });
+    }
+    if(item == 4){
+      return  StreamBuilder(
+          stream: FirebaseFirestore.instance.collection('Electrical Engineering').snapshots(),
+          builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+            if (!snapshot.hasData) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+            if(snapshot.data?.size==0){
+              return const Center(
+                child: Text("No Items In Electrical Engineering"),
+              );
+            }
+            return ListView(
+              scrollDirection: Axis.vertical,
+              shrinkWrap: true,
+              children: snapshot.data!.docs.map((document) {
+
+                return FadeAnimation(1.5, makeItem(count:_choiceIndex,tag: Colors.deepPurple,
+                    context: context,
+                    name: document['Name'],
+                    category: document['Department'],
+                    sem: document['Semester'],
+                    price: document['Price']));
+
+              }
+
+              ).toList(),
+
+            );
+
+
+
+          });
+    }
+    if(item == 5){
+      return  StreamBuilder(
+          stream: FirebaseFirestore.instance.collection('Electronics Engineering').snapshots(),
+          builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+            if (!snapshot.hasData) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+            if(snapshot.data?.size==0){
+              return const Center(
+                child: Text("No Items In Electronics Engineering"),
+              );
+            }
+            return ListView(
+              scrollDirection: Axis.vertical,
+              shrinkWrap: true,
+              children: snapshot.data!.docs.map((document) {
+
+                return FadeAnimation(1.5, makeItem(count:_choiceIndex,tag: Colors.pink,
+                    context: context,
+                    name: document['Name'],
+                    category: document['Department'],
+                    sem: document['Semester'],
+                    price: document['Price']));
+
+              }
+
+              ).toList(),
+
+            );
+
+
+
+          });
+    }
+    else{
+      return  StreamBuilder(
+          stream: FirebaseFirestore.instance.collection('Common').snapshots(),
+          builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+            if (!snapshot.hasData) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+            if(snapshot.data?.size==0){
+              return const Center(
+                child: Text("No Items In Common Books"),
+              );
+            }
+            return ListView(
+              scrollDirection: Axis.vertical,
+              shrinkWrap: true,
+              children: snapshot.data!.docs.map((document) {
+
+                return FadeAnimation(1.5, makeItem(count:_choiceIndex,tag: Colors.blue,
+                    context: context,
+                    name: document['Name'],
+                    category: document['Department'],
+                    sem: document['Semester'],
+                    price: document['Price']));
+
+              }
+
+              ).toList(),
+
+            );
+
+
+
+          });
+    }
+
+  }
+
 }
