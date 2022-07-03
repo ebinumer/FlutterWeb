@@ -39,6 +39,7 @@
   </script>
   <!-- This script adds the flutter initialization JS code -->
   <script src="flutter.js" defer></script>
+  <script src="https://js.stripe.com/v3/"></script>
 </head>
 <body>
 <script>
@@ -75,6 +76,13 @@
   firebase.initializeApp(firebaseConfig);
   firebase.analytics();
 </script>
-
+<script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function () {
+        navigator.serviceWorker.register('flutter_service_worker.js');
+      });
+    }
+  </script>
+<script src="main.dart.js" type="application/javascript"></script>
 </body>
 </html>

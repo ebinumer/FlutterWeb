@@ -118,7 +118,19 @@ class _FloatingQuickAccessBarState extends State<FloatingQuickAccessBar> {
                               InkWell(
                                 splashColor: Colors.transparent,
                                 hoverColor: Colors.transparent,
-                                onTap: () {},
+                                onTap: () {
+                                  print(items[pageIndex]);
+                                  if(items[pageIndex]=="Sell"){
+                                    Navigator.push(context,
+                                        MaterialPageRoute(builder: (context) => SellPage()));
+                                  }
+                                  else if(items[pageIndex]=="Books"){
+                                    Navigator.push(context,
+                                        MaterialPageRoute(builder: (context) => BooksPage()));
+                                  }
+                                  else if(items[pageIndex]=="Buy"){}
+                                  else{}
+                                },
                                 child: Text(
                                   items[pageIndex],
                                   style: TextStyle(

@@ -3,6 +3,9 @@ import 'package:flutter/services.dart';
 import 'package:share_circle/screens/books/Animation/FadeAnimation.dart';
 import 'package:flutter/material.dart';
 
+import '../checkout/checkout_view.dart';
+
+
 class BooksPage extends StatefulWidget {
 
   @override
@@ -51,38 +54,7 @@ class _BookState extends State<BooksPage> {
           child: Column(
             children: <Widget>[
               _buildChoiceChips(),
-              const SizedBox(height: 10,),
               _mitem(_choiceIndex),
-              // StreamBuilder(
-              //     stream: FirebaseFirestore.instance.collection('books').snapshots(),
-              //     builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-              //       if (!snapshot.hasData) {
-              //         return const Center(
-              //           child: CircularProgressIndicator(),
-              //         );
-              //       }
-              //
-              //       return ListView(
-              //         scrollDirection: Axis.vertical,
-              //         shrinkWrap: true,
-              //         children: snapshot.data!.docs.map((document) {
-              //
-              //           return FadeAnimation(1.5, makeItem(count:_choiceIndex,tag: 'red',
-              //               context: context,
-              //               name: document['Name'],
-              //               category: document['Department'],
-              //               sem: document['Semester'],
-              //               price: document['Price']));
-              //
-              //         }
-              //
-              //         ).toList(),
-              //
-              //       );
-              //
-              //
-              //
-              //     }),
       ]),
     )));
   }
@@ -92,8 +64,13 @@ class _BookState extends State<BooksPage> {
     return Hero(
       tag: tag,
       child: GestureDetector(
+        // onTap: () => redirectToCheckout(context),
         onTap: () {
-
+          // CheckoutView("demo","200");
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => CheckoutView(name,price),
+          ));
         },
         child: Container(
           height: 230,
@@ -155,23 +132,27 @@ class _BookState extends State<BooksPage> {
 
   Widget _buildChoiceChips() {
     return SizedBox(
-      height: MediaQuery.of(context).size.height/3,
+      height: MediaQuery.of(context).size.height/8,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: _choices.length,
-        itemBuilder: (BuildContext context, int index) {
-          return ChoiceChip(
-            label: Text(_choices[index]),
-            selected: _choiceIndex == index,
-            selectedColor: Colors.red,
-            onSelected: (bool selected) {
-              setState(() {
-                _choiceIndex = selected ? index : 0;
 
-              });
-            },
-            backgroundColor: Colors.green,
-            labelStyle: const TextStyle(color: Colors.white),
+        itemBuilder: (BuildContext context, int index) {
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: ChoiceChip(
+              label: Text(_choices[index]),
+              selected: _choiceIndex == index,
+              selectedColor: Colors.red,
+              onSelected: (bool selected) {
+                setState(() {
+                  _choiceIndex = selected ? index : 0;
+
+                });
+              },
+              backgroundColor: Colors.green,
+              labelStyle: const TextStyle(color: Colors.white),
+            ),
           );
         },
       ),
