@@ -1,3 +1,4 @@
+import 'package:share_circle/screens/profile.dart';
 import 'package:share_circle/widgets/responsive.dart';
 import 'package:flutter/material.dart';
 
@@ -20,12 +21,11 @@ class _FloatingQuickAccessBarState extends State<FloatingQuickAccessBar> {
   List _isHovering = [false, false, false, false];
   List<Widget> rowElements = [];
 
-  List<String> items = ['Books', 'Sell', 'Buy', 'History'];
+  List<String> items = ['Books', 'Sell','Profile',];
   List<IconData> icons = [
-    Icons.location_on,
-    Icons.date_range,
+    Icons.book,
+    Icons.book_online,
     Icons.people,
-    Icons.wb_sunny
   ];
 
   List<Widget> generateRowElements() {
@@ -49,8 +49,12 @@ class _FloatingQuickAccessBarState extends State<FloatingQuickAccessBar> {
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => SellPage()));
           }
-          else if (items[i] == "Buy") {}
-          else if (items[i] == "History") {}
+          else if (items[i] == "Profile") {
+
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => ProfilePage()));
+
+          }
 
         },
         child: Text(
@@ -128,7 +132,10 @@ class _FloatingQuickAccessBarState extends State<FloatingQuickAccessBar> {
                                     Navigator.push(context,
                                         MaterialPageRoute(builder: (context) => BooksPage()));
                                   }
-                                  else if(items[pageIndex]=="Buy"){}
+                                  else if(items[pageIndex]=="Profile"){
+                                    Navigator.push(context,
+                                        MaterialPageRoute(builder: (context) => ProfilePage()));
+                                  }
                                   else{}
                                 },
                                 child: Text(

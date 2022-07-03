@@ -101,9 +101,9 @@ class _BookState extends State<BooksPage> {
                       children: <Widget>[
                         FadeAnimation(1, Text(name, style: const TextStyle(color: Colors.white, fontSize: 30, fontWeight: FontWeight.bold),)),
                         const SizedBox(height: 10,),
-                        FadeAnimation(1.1, Text(category, style: const TextStyle(color: Colors.white, fontSize: 20),)),
+                        FadeAnimation(1.1, Text("Category : "+category, style: const TextStyle(color: Colors.white, fontSize: 20),)),
                         const SizedBox(height: 10,),
-                        FadeAnimation(1.1, Text(sem, style: const TextStyle(color: Colors.white, fontSize: 20),)),
+                        FadeAnimation(1.1, Text("Semester : "+sem, style: const TextStyle(color: Colors.white, fontSize: 20),)),
 
                       ],
                     ),
@@ -121,7 +121,14 @@ class _BookState extends State<BooksPage> {
                   )),
                 ],
               ),
-              FadeAnimation(1.2, Text("₹"+price, style: const TextStyle(color: Colors.white, fontSize: 30, fontWeight: FontWeight.bold),)),
+              Row(
+                children: const [
+                  Spacer(),
+                  Text("Click here to purchase -->", style: TextStyle(color: Colors.white, fontSize: 20),),
+                  Spacer(),
+                ],
+              ),
+              FadeAnimation(1.2, Text("Price: ₹"+price, style: const TextStyle(color: Colors.white, fontSize: 30, fontWeight: FontWeight.bold),)),
             ],
           ),
         ),

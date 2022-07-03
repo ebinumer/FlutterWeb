@@ -3,6 +3,7 @@ import 'package:path/path.dart' as Path;
 import 'package:flutter/material.dart';
 import 'package:share_circle/screens/home_page.dart';
 import 'package:share_circle/screens/register.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../utils/authentication.dart';
 
@@ -192,7 +193,7 @@ class Body extends StatelessWidget {
   }
 
   Widget _formLogin(BuildContext context) {
-
+    late SharedPreferences prefs;
     final _emailController = TextEditingController();
     final _passwordController = TextEditingController();
     return Column(
@@ -274,8 +275,12 @@ class Body extends StatelessWidget {
                 AuthenticationHelper()
                     .signInWithEmailPassword(
                     _emailController.text, _passwordController.text, context)
-                    .then((result) {
+                    .then((result) async {
                   if (result != null ) {
+
+                    prefs = await SharedPreferences.getInstance();
+                    prefs.setString("email", _emailController.text.toString());
+
                     Navigator.pushReplacement(context,
                         MaterialPageRoute(builder: (context) => HomePage()));
                   }

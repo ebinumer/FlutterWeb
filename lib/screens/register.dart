@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:share_circle/screens/home_page.dart';
 import 'package:share_circle/screens/login.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../utils/authentication.dart';
 
@@ -118,6 +119,7 @@ class Menu extends StatelessWidget {
 }
 
 class Body extends StatelessWidget {
+  late SharedPreferences prefs;
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -336,8 +338,10 @@ class Body extends StatelessWidget {
                 AuthenticationHelper()
                     .registerWithEmailPassword(
                     _emailController.text, _passwordController.text)
-                    .then((result) {
+                    .then((result) async {
                   if (result == "Success") {
+                    prefs = await SharedPreferences.getInstance();
+                    prefs.setString("email", _emailController.text.toString());
                     FirebaseFirestore.instance
                         .collection('register')
                         .add({

@@ -17,6 +17,14 @@ class SellPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return  Scaffold(
       backgroundColor: Color(0xFFf5f5f5),
+      appBar:AppBar(
+      elevation: 0,
+      iconTheme: const IconThemeData(
+        color: Colors.black, //change your color here
+      ),
+      backgroundColor: Colors.transparent,
+      leading: null,
+    ),
       body: ListView(
         padding: EdgeInsets.symmetric(
             horizontal: MediaQuery.of(context).size.width / 8),
