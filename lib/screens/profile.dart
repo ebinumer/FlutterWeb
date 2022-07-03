@@ -1,17 +1,21 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:share_circle/screens/login.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfilePage extends StatefulWidget {
+  String name;
+  ProfilePage(this.name);
+
   @override
   _ProfilePageState createState()
   {
-    return _ProfilePageState();
+    return _ProfilePageState(name);
   }
 }
 class _ProfilePageState extends State<ProfilePage> {
+  String name;
+  _ProfilePageState(this.name);
+
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +33,7 @@ class _ProfilePageState extends State<ProfilePage> {
         padding: EdgeInsets.symmetric(
             horizontal: MediaQuery.of(context).size.width / 8),
         children: [
-          Body()
+          Body(name)
         ],
       ),);
 
@@ -37,24 +41,16 @@ class _ProfilePageState extends State<ProfilePage> {
 
   }
 
+
+
 }
 
 
-class Body extends StatefulWidget {
-  const Body({Key? key}) : super(key: key);
+class Body extends StatelessWidget {
+  String name;
+  Body(this.name);
 
-  @override
-  _Body createState() => _Body();
-}
 
-class _Body extends State<Body> {
-  late SharedPreferences prefs;
-  final _usernameController = TextEditingController();
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
-  final _mobileController = TextEditingController();
-  final _addressController = TextEditingController();
-  late var email;
 
   @override
   Widget build(BuildContext context) {
@@ -106,8 +102,15 @@ class _Body extends State<Body> {
 
   Widget _formLogin(BuildContext context) {
 
-    email = prefs.getString("email");
-retrieve();
+
+    final _usernameController = TextEditingController();
+    final _emailController = TextEditingController();
+    final _passwordController = TextEditingController();
+    final _mobileController = TextEditingController();
+    final _addressController = TextEditingController();
+
+   _emailController.text=name;
+
     return Column(
       children: [
 
@@ -203,11 +206,5 @@ retrieve();
 
   }
 
-  retrieve() async{
-    prefs = await SharedPreferences.getInstance();
-    email = prefs.getString("email");
-    setState(() {
-print(email);
-    });
-  }
+
 }

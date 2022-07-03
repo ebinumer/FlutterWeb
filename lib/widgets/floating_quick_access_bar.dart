@@ -1,6 +1,7 @@
 import 'package:share_circle/screens/profile.dart';
 import 'package:share_circle/widgets/responsive.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../screens/books/books.dart';
 import '../screens/sell_book.dart';
@@ -18,6 +19,7 @@ class FloatingQuickAccessBar extends StatefulWidget {
 }
 
 class _FloatingQuickAccessBarState extends State<FloatingQuickAccessBar> {
+  late SharedPreferences prefs;
   List _isHovering = [false, false, false, false];
   List<Widget> rowElements = [];
 
@@ -39,7 +41,7 @@ class _FloatingQuickAccessBarState extends State<FloatingQuickAccessBar> {
             value ? _isHovering[i] = true : _isHovering[i] = false;
           });
         },
-        onTap: () {
+        onTap: () async {
           print("${items[i]}");
           if (items[i] == "Books") {
             Navigator.push(context,
@@ -50,9 +52,11 @@ class _FloatingQuickAccessBarState extends State<FloatingQuickAccessBar> {
                 MaterialPageRoute(builder: (context) => SellPage()));
           }
           else if (items[i] == "Profile") {
-
+            prefs = await SharedPreferences.getInstance();
+            var name = prefs.getString("email");
+            print(name);
             Navigator.push(context,
-                MaterialPageRoute(builder: (context) => ProfilePage()));
+                MaterialPageRoute(builder: (context) => ProfilePage(name!)));
 
           }
 
@@ -122,7 +126,7 @@ class _FloatingQuickAccessBarState extends State<FloatingQuickAccessBar> {
                               InkWell(
                                 splashColor: Colors.transparent,
                                 hoverColor: Colors.transparent,
-                                onTap: () {
+                                onTap: () async {
                                   print(items[pageIndex]);
                                   if(items[pageIndex]=="Sell"){
                                     Navigator.push(context,
@@ -133,8 +137,12 @@ class _FloatingQuickAccessBarState extends State<FloatingQuickAccessBar> {
                                         MaterialPageRoute(builder: (context) => BooksPage()));
                                   }
                                   else if(items[pageIndex]=="Profile"){
+                                    prefs = await SharedPreferences.getInstance();
+                                    var name = prefs.getString("email");
+                                    print(name);
+
                                     Navigator.push(context,
-                                        MaterialPageRoute(builder: (context) => ProfilePage()));
+                                        MaterialPageRoute(builder: (context) => ProfilePage(name!)));
                                   }
                                   else{}
                                 },
