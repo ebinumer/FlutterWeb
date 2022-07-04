@@ -344,12 +344,19 @@ class Body extends StatelessWidget {
                     prefs.setString("email", _emailController.text.toString());
                     FirebaseFirestore.instance
                         .collection('register')
-                        .add({
+                        .doc(_emailController.text)
+                    .set({
                       'email': _emailController.text,
                       'Mobile': _mobileController.text,
                       'address': _addressController.text,
                       'userName': _usernameController.text,
                     });
+                    //     .add({
+                    //   'email': _emailController.text,
+                    //   'Mobile': _mobileController.text,
+                    //   'address': _addressController.text,
+                    //   'userName': _usernameController.text,
+                    // });
                     Navigator.pushReplacement(context,
                         MaterialPageRoute(builder: (context) => HomePage()));
                   }

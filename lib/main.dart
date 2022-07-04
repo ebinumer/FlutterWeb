@@ -1,5 +1,6 @@
 import 'package:easy_dynamic_theme/easy_dynamic_theme.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:share_circle/screens/login.dart';
 import 'package:share_circle/utils/theme_data.dart';
 import 'package:flutter/material.dart';
 
@@ -45,13 +46,13 @@ class _MyAppState extends State<MyApp> {
 
           // Once complete, show your application
           if (snapshot.connectionState == ConnectionState.done) {
-            // return LoginPage();
-            return HomePage();
+            return LoginPage();
+            // return HomePage();
           }
 
           // Otherwise, show something whilst waiting for initialization to complete
-          return HomePage();
-          // return LoginPage();
+          // return HomePage();
+          return LoginPage();
         },
       ),
 

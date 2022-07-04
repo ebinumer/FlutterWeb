@@ -101,107 +101,125 @@ class Body extends StatelessWidget {
   }
 
   Widget _formLogin(BuildContext context) {
-
+    var collection = FirebaseFirestore.instance.collection('register');
+    // var docSnapshot = await collection.doc('name').get();
 
     final _usernameController = TextEditingController();
     final _emailController = TextEditingController();
-    final _passwordController = TextEditingController();
     final _mobileController = TextEditingController();
     final _addressController = TextEditingController();
 
    _emailController.text=name;
 
-    return Column(
-      children: [
+
+    return StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
+        stream: collection.doc(name).snapshots(),
+      builder: (context, snapshot) {
+        if (snapshot.hasError) return Text('Error = ${snapshot.error}');
+
+        if (snapshot.hasData) {
+          var output = snapshot.data!.data();
+          print(output);
+          var value = output!['userName']; // <-- Your value
+          print(value);
+          _usernameController.text= output!['userName'];
+          _mobileController.text= output!['Mobile'];
+          _addressController.text= output!['address'];
+        }
 
 
-        TextField(
-          controller: _usernameController,
-          enabled: false,
-          decoration: InputDecoration(
-            hintText: 'Enter name',
-            filled: true,
-            fillColor: Colors.blueGrey[50],
-            labelStyle: const TextStyle(fontSize: 12),
-            contentPadding: const EdgeInsets.only(left: 30),
-            enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: (Colors.blueGrey[50])!),
-              borderRadius: BorderRadius.circular(15),
-            ),
+        return Column(
+          children: [
 
-            focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: (Colors.blueGrey[50])!),
-              borderRadius: BorderRadius.circular(15),
-            ),
-          ),
-        ),
-        const SizedBox(height: 30),
-        TextField(
-          enabled: false,
-          controller: _addressController,
-          decoration: InputDecoration(
-            hintText: 'Enter Address',
-            filled: true,
-            fillColor: Colors.blueGrey[50],
-            labelStyle: const TextStyle(fontSize: 12),
-            contentPadding: const EdgeInsets.only(left: 30),
-            enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: (Colors.blueGrey[50])!),
-              borderRadius: BorderRadius.circular(15),
-            ),
+            TextField(
+              controller: _usernameController,
+              enabled: false,
+              decoration: InputDecoration(
+                hintText: 'Enter name',
+                filled: true,
+                fillColor: Colors.blueGrey[50],
+                labelStyle: const TextStyle(fontSize: 12),
+                contentPadding: const EdgeInsets.only(left: 30),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: (Colors.blueGrey[50])!),
+                  borderRadius: BorderRadius.circular(15),
+                ),
 
-            focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: (Colors.blueGrey[50])!),
-              borderRadius: BorderRadius.circular(15),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: (Colors.blueGrey[50])!),
+                  borderRadius: BorderRadius.circular(15),
+                ),
+              ),
             ),
-          ),
-        ),
-        const SizedBox(height: 30),
-        TextField(
-          enabled: false,
-          controller: _mobileController,
-          decoration: InputDecoration(
-            hintText: 'Enter Mobile Number',
-            filled: true,
-            fillColor: Colors.blueGrey[50],
-            labelStyle: const TextStyle(fontSize: 12),
-            contentPadding: const EdgeInsets.only(left: 30),
-            enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: (Colors.blueGrey[50])!),
-              borderRadius: BorderRadius.circular(15),
-            ),
+            const SizedBox(height: 30),
+            TextField(
+              enabled: false,
+              controller: _addressController,
+              decoration: InputDecoration(
+                hintText: 'Enter Address',
+                filled: true,
+                fillColor: Colors.blueGrey[50],
+                labelStyle: const TextStyle(fontSize: 12),
+                contentPadding: const EdgeInsets.only(left: 30),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: (Colors.blueGrey[50])!),
+                  borderRadius: BorderRadius.circular(15),
+                ),
 
-            focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: (Colors.blueGrey[50])!),
-              borderRadius: BorderRadius.circular(15),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: (Colors.blueGrey[50])!),
+                  borderRadius: BorderRadius.circular(15),
+                ),
+              ),
             ),
-          ),
-        ),
-        const SizedBox(height: 30),
-        TextField(
-          enabled: false,
-          controller: _emailController,
-          keyboardType: TextInputType.emailAddress,
-          decoration: InputDecoration(
-            hintText: 'Enter email',
-            filled: true,
-            fillColor: Colors.blueGrey[50],
-            labelStyle: TextStyle(fontSize: 12),
-            contentPadding: EdgeInsets.only(left: 30),
-            enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: (Colors.blueGrey[50])!),
-              borderRadius: BorderRadius.circular(15),
+            const SizedBox(height: 30),
+            TextField(
+              enabled: false,
+              controller: _mobileController,
+              decoration: InputDecoration(
+                hintText: 'Enter Mobile Number',
+                filled: true,
+                fillColor: Colors.blueGrey[50],
+                labelStyle: const TextStyle(fontSize: 12),
+                contentPadding: const EdgeInsets.only(left: 30),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: (Colors.blueGrey[50])!),
+                  borderRadius: BorderRadius.circular(15),
+                ),
+
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: (Colors.blueGrey[50])!),
+                  borderRadius: BorderRadius.circular(15),
+                ),
+              ),
             ),
-            focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: (Colors.blueGrey[50])!),
-              borderRadius: BorderRadius.circular(15),
+            const SizedBox(height: 30),
+            TextField(
+              enabled: false,
+              controller: _emailController,
+              keyboardType: TextInputType.emailAddress,
+              decoration: InputDecoration(
+                hintText: 'Enter email',
+                filled: true,
+                fillColor: Colors.blueGrey[50],
+                labelStyle: TextStyle(fontSize: 12),
+                contentPadding: EdgeInsets.only(left: 30),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: (Colors.blueGrey[50])!),
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: (Colors.blueGrey[50])!),
+                  borderRadius: BorderRadius.circular(15),
+                ),
+              ),
             ),
-          ),
-        ),
-        const SizedBox(height: 40),
+            const SizedBox(height: 40),
 
 
-      ],
+          ],
+        );
+      }
     );
 
   }
